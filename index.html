@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWEA - Public Welfare and Emergency Agency</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .tagline {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        nav {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-category {
+            position: relative;
+        }
+
+        .nav-category > button {
+            background: none;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .nav-category > button:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 250px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .dropdown.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown button {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 12px 20px;
+            text-align: left;
+            cursor: pointer;
+            color: #333;
+            transition: background 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .dropdown button:hover {
+            background: #f0f4ff;
+            color: #2a5298;
+        }
+
+        main {
+            padding: 2rem 0;
+            min-height: 60vh;
+        }
+
+        .page {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .home-page {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .home-page h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .home-page p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header {
+            border-bottom: 3px solid #2a5298;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .info-section {
+            margin-bottom: 2rem;
+        }
+
+        .info-section h3 {
+            color: #2a5298;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2a5298;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2a5298;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42, 82, 152, 0.4);
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .breadcrumb {
+            background: rgba(42, 82, 152, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                text-align: center;
+            }
+            
+            .nav-container {
+                justify-content: center;
+            }
+            
+            .home-page h1 {
+                font-size: 2rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <div class="logo">PWEA</div>
+                    <div class="tagline">Public Welfare and Emergency Agency</div>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <div class="container">
+                <div class="nav-container">
+                    <div class="nav-category">
+                        <button onclick="showPage('home')">Home</button>
+                    </div>
+                    <div class="nav-category">
+                        <button onclick="toggleDropdown('emergency')">Emergency Services ▼</button>
+                        <div class="dropdown" id="emergency-dropdown">
+                            <button onclick="showPage('fire-safety-info')">Fire Safety Information</button>
+                            <button onclick="showPage('emergency-contacts-info')">Emergency Contacts</button>
+                            <button onclick="showPage('report-emergency')">Report Emergency</button>
+                        </div>
+                    </div>
+                    <div class="nav-category">
+                        <button onclick="toggleDropdown('health')">Health & Safety ▼</button>
+                        <div class="dropdown" id="health-dropdown">
+                            <button onclick="showPage('health-guidelines-info')">Health Guidelines</button>
+                            <button onclick="showPage('safety-protocols-info')">Safety Protocols</button>
+                            <button onclick="showPage('report-health-safety')">Report Health/Safety Issue</button>
+                        </div>
+                    </div>
+                    <div class="nav-category">
+                        <button onclick="toggleDropdown('community')">Community Services ▼</button>
+                        <div class="dropdown" id="community-dropdown">
+                            <button onclick="showPage('community-programs-info')">Community Programs</button>
+                            <button onclick="showPage('volunteer-opportunities-info')">Volunteer Opportunities</button>
+                            <button onclick="showPage('report-community-issue')">Report Community Issue</button>
+                        </div>
+                    </div>
+                    <div class="nav-category">
+                        <button onclick="toggleDropdown('resources')">Resources ▼</button>
+                        <div class="dropdown" id="resources-dropdown">
+                            <button onclick="showPage('assistance-programs-info')">Assistance Programs</button>
+                            <button onclick="showPage('legal-aid-info')">Legal Aid</button>
+                            <button onclick="showPage('request-assistance')">Request Assistance</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Home Page -->
+        <div class="page active home-page" id="home">
+            <h1>Welcome to PWEA</h1>
+            <p>Your trusted partner in public welfare and emergency response. We're dedicated to ensuring the safety, health, and well-being of our community through comprehensive services and rapid response capabilities.</p>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🚨</div>
+                    <h3>Emergency Response</h3>
+                    <p>24/7 emergency services and rapid response teams ready to assist in any crisis situation.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏥</div>
+                    <h3>Health & Safety</h3>
+                    <p>Comprehensive health guidelines and safety protocols to protect our community.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Community Support</h3>
+                    <p>Programs and services designed to strengthen our community and support those in need.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Information Pages -->
+        <div class="page" id="fire-safety-info">
+            <div class="breadcrumb">Emergency Services > Fire Safety Information</div>
+            <div class="page-header">
+                <h2 class="page-title">Fire Safety Information</h2>
+                <p class="page-subtitle">Essential fire safety guidelines and prevention tips</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Fire Prevention</h3>
+                <p>Prevention is the best protection against fire. Install smoke detectors on every level of your home and test them monthly. Keep fire extinguishers in key locations and ensure everyone knows how to use them.</p>
+                <p>Regularly inspect electrical wiring, avoid overloading outlets, and maintain heating equipment. Create and practice a family fire escape plan with two ways out of every room.</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>In Case of Fire</h3>
+                <p>If you discover a fire, alert others immediately and call emergency services. If the fire is small and you have a clear escape route, you may attempt to extinguish it with an appropriate fire extinguisher.</p>
+                <p>If evacuation is necessary, stay low to avoid smoke, feel doors before opening them, and never use elevators during a fire emergency.</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>After a Fire</h3>
+                <p>Do not enter a fire-damaged building until authorities declare it safe. Contact your insurance company and document all damage with photographs. Be aware of structural damage and potential hazards.</p>
+            </div>
+        </div>
+
+        <div class="page" id="emergency-contacts-info">
+            <div class="breadcrumb">Emergency Services > Emergency Contacts</div>
+            <div class="page-header">
+                <h2 class="page-title">Emergency Contacts</h2>
+                <p class="page-subtitle">Important contact information for emergency situations</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Primary Emergency Services</h3>
+                <p><strong>Emergency Services:</strong> 911 (Police, Fire, Medical)</p>
+                <p><strong>PWEA Emergency Hotline:</strong> 555-PWEA-911 (555-793-2911)</p>
+                <p><strong>Non-Emergency Police:</strong> 555-POLICE-1 (555-765-4231)</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Specialized Services</h3>
+                <p><strong>Poison Control:</strong> 1-800-222-1222</p>
+                <p><strong>Crisis Counseling:</strong> 555-CRISIS-1 (555-274-7471)</p>
+                <p><strong>Disaster Relief:</strong> 555-RELIEF-1 (555-735-4331)</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Utility Emergencies</h3>
+                <p><strong>Gas Emergency:</strong> 555-GAS-LEAK (555-427-5325)</p>
+                <p><strong>Electric Emergency:</strong> 555-ELECTRIC (555-353-2874)</p>
+                <p><strong>Water Emergency:</strong> 555-H2O-HELP (555-426-4357)</p>
+            </div>
+        </div>
+
+        <div class="page" id="health-guidelines-info">
+            <div class="breadcrumb">Health & Safety > Health Guidelines</div>
+            <div class="page-header">
+                <h2 class="page-title">Health Guidelines</h2>
+                <p class="page-subtitle">Current health recommendations and guidelines</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>General Health Practices</h3>
+                <p>Maintain good personal hygiene by washing hands frequently with soap and water for at least 20 seconds. Cover coughs and sneezes with your elbow or a tissue, and dispose of tissues properly.</p>
+                <p>Stay up to date with recommended vaccinations and regular health screenings. Maintain a healthy diet, exercise regularly, and get adequate sleep.</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Public Health Measures</h3>
+                <p>Follow current public health advisories and recommendations from health authorities. When ill, stay home to prevent spreading illness to others.</p>
+                <p>Be aware of health alerts and emergency notifications from PWEA and local health departments.</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Mental Health Resources</h3>
+                <p>Mental health is just as important as physical health. Seek support when needed and don't hesitate to reach out to mental health professionals.</p>
+                <p>Community support groups and counseling services are available through PWEA's community programs.</p>
+            </div>
+        </div>
+
+        <div class="page" id="safety-protocols-info">
+            <div class="breadcrumb">Health & Safety > Safety Protocols</div>
+            <div class="page-header">
+                <h2 class="page-title">Safety Protocols</h2>
+                <p class="page-subtitle">Standard safety procedures and protocols</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Workplace Safety</h3>
+                <p>Follow all workplace safety guidelines and use appropriate personal protective equipment (PPE). Report safety hazards immediately to supervisors or safety officers.</p>
+                <p>Participate in regular safety training and drills. Know the location of emergency exits, first aid kits, and emergency equipment.</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Home Safety</h3>
+                <p>Install and maintain smoke and carbon monoxide detectors. Keep emergency supplies including flashlights, batteries, first aid kit, and emergency contact information.</p>
+                <p>Secure heavy furniture and appliances that could tip over during earthquakes or severe weather.</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Public Safety</h3>
+                <p>Be aware of your surroundings in public spaces. Follow posted safety signs and barriers. Report suspicious activities or safety concerns to authorities.</p>
+                <p>During severe weather or emergency situations, follow evacuation orders and safety instructions from emergency personnel.</p>
+            </div>
+        </div>
+
+        <div class="page" id="community-programs-info">
+            <div class="breadcrumb">Community Services > Community Programs</div>
+            <div class="page-header">
+                <h2 class="page-title">Community Programs</h2>
+                <p class="page-subtitle">Programs designed to strengthen and support our community</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Emergency Preparedness Training</h3>
+                <p>Free community workshops on emergency preparedness, including first aid training, disaster response, and emergency supply preparation.</p>
+                <p>Sessions are held monthly at various community centers. Registration is required and can be completed through our assistance request system.</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Neighborhood Watch Program</h3>
+                <p>Community-based crime prevention program that empowers residents to take an active role in keeping their neighborhoods safe.</p>
+                <p>Volunteers receive training on observation and reporting techniques, and coordinate with local law enforcement to enhance community safety.</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Youth Safety Education</h3>
+                <p>Educational programs for children and teenagers covering personal safety, internet safety, and emergency response.</p>
+                <p>Programs are available for schools, community groups, and families looking to enhance safety education for young people.</p>
+            </div>
+        </div>
+
+        <div class="page" id="volunteer-opportunities-info">
+            <div class="breadcrumb">Community Services > Volunteer Opportunities</div>
+            <div class="page-header">
+                <h2 class="page-title">Volunteer Opportunities</h2>
+                <p class="page-subtitle">Join us in making a difference in our community</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Emergency Response Volunteers</h3>
+                <p>Support emergency response efforts through various roles including communication support, logistics, and community assistance during emergencies.</p>
+                <p>Training is provided for all volunteers. Background checks may be required for certain positions.</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Community Outreach</h3>
+                <p>Help spread awareness about PWEA services and safety information through community events, educational presentations, and outreach activities.</p>
+                <p>Flexible scheduling available to accommodate various availability and skill levels.</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Administrative Support</h3>
+                <p>Provide valuable administrative support including data entry, filing, answering phones, and assisting with special projects.</p>
+                <p>Great opportunity for those who prefer office-based volunteer work with regular schedules.</p>
+            </div>
+        </div>
+
+        <div class="page" id="assistance-programs-info">
+            <div class="breadcrumb">Resources > Assistance Programs</div>
+            <div class="page-header">
+                <h2 class="page-title">Assistance Programs</h2>
+                <p class="page-subtitle">Support services available to community members</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Emergency Financial Assistance</h3>
+                <p>Short-term financial assistance for individuals and families facing emergency situations such as medical emergencies, natural disasters, or unexpected job loss.</p>
+                <p>Applications are reviewed on a case-by-case basis. Documentation of emergency circumstances may be required.</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Temporary Housing Support</h3>
+                <p>Assistance with temporary housing arrangements for those displaced by emergencies, disasters, or other urgent situations.</p>
+                <p>Coordination with local shelters, temporary housing facilities, and partner organizations to provide safe accommodation.</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Resource Connection Services</h3>
+                <p>Help connecting community members with appropriate resources including healthcare services, social services, employment assistance, and educational programs.</p>
+                <p>Case workers available to help navigate available resources and complete necessary applications.</p>
+            </div>
+        </div>
+
+        <div class="page" id="legal-aid-info">
+            <div class="breadcrumb">Resources > Legal Aid</div>
+            <div class="page-header">
+                <h2 class="page-title">Legal Aid</h2>
+                <p class="page-subtitle">Legal assistance and resources for community members</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Emergency Legal Assistance</h3>
+                <p>Free legal consultation and assistance for urgent legal matters related to emergency situations, including housing rights, employment issues, and benefit claims.</p>
+                <p>Services provided by qualified legal professionals and partnering legal aid organizations.</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Document Assistance</h3>
+                <p>Help with completing legal documents, understanding legal notices, and accessing court services related to emergency situations.</p>
+                <p>Assistance available in multiple languages through our interpreter services.</p>
+            </div>
+            
+            <div class="info-section">
+                <h3>Rights Information</h3>
+                <p>Educational resources about legal rights in emergency situations, tenant rights, worker rights, and consumer protection.</p>
+                <p>Regular workshops and informational sessions available to the community.</p>
+            </div>
+        </div>
+
+        <!-- Report Pages -->
+        <div class="page" id="report-emergency">
+            <div class="breadcrumb">Emergency Services > Report Emergency</div>
+            <div class="page-header">
+                <h2 class="page-title">Report Emergency</h2>
+                <p class="page-subtitle">For immediate emergencies, call 911. Use this form for non-immediate emergency reports.</p>
+            </div>
+            
+            <div class="alert success" id="emergency-success">Your emergency report has been submitted successfully. Our team will respond promptly.</div>
+            <div class="alert error" id="emergency-error">There was an error submitting your report. Please try again or call our emergency hotline.</div>
+            
+            <form onsubmit="submitReport(event, 'emergency')">
+                <div class="form-group">
+                    <label for="emergency-name">Your Name:</label>
+                    <input type="text" id="emergency-name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="emergency-contact">Contact Information:</label>
+                    <input type="text" id="emergency-contact" name="contact" required placeholder="Phone number or email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="emergency-topic">Type of Emergency:</label>
+                    <select id="emergency-topic" name="topic" required>
+                        <option value="">Select emergency type</option>
+                        <option value="Fire/Explosion">Fire/Explosion</option>
+                        <option value="Medical Emergency">Medical Emergency</option>
+                        <option value="Natural Disaster">Natural Disaster</option>
+                        <option value="Hazardous Materials">Hazardous Materials</option>
+                        <option value="Infrastructure Failure">Infrastructure Failure</option>
+                        <option value="Other Emergency">Other Emergency</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="emergency-location">Location:</label>
+                    <input type="text" id="emergency-location" name="location" required placeholder="Specific address or location">
+                </div>
+                
+                <div class="form-group">
+                    <label for="emergency-description">Emergency Description:</label>
+                    <textarea id="emergency-description" name="description" required placeholder="Please provide detailed information about the emergency situation..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit Emergency Report</button>
+            </form>
+        </div>
+
+        <div class="page" id="report-health-safety">
+            <div class="breadcrumb">Health & Safety > Report Health/Safety Issue</div>
+            <div class="page-header">
+                <h2 class="page-title">Report Health/Safety Issue</h2>
+                <p class="page-subtitle">Report health or safety concerns in your community</p>
+            </div>
+            
+            <div class="alert success" id="health-success">Your health/safety report has been submitted successfully. We will investigate this matter promptly.</div>
+            <div class="alert error" id="health-error">There was an error submitting your report. Please try again.</div>
+            
+            <form onsubmit="submitReport(event, 'health')">
+                <div class="form-group">
+                    <label for="health-name">Your Name:</label>
+                    <input type="text" id="health-name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="health-contact">Contact Information:</label>
+                    <input type="text" id="health-contact" name="contact" required placeholder="Phone number or email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="health-topic">Issue Type:</label>
+                    <select id="health-topic" name="topic" required>
+                        <option value="">Select issue type</option>
+                        <option value="Food Safety">Food Safety</option>
+                        <option value="Water Quality">Water Quality</option>
+                        <option value="Air Quality">Air Quality</option>
+                        <option value="Workplace Safety">Workplace Safety</option>
+                        <option value="Public Health Concern">Public Health Concern</option>
+                        <option value="Environmental Hazard">Environmental Hazard</option>
+                        <option value="Other Safety Issue">Other Safety Issue</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="health-location">Location of Issue:</label>
+                    <input type="text" id="health-location" name="location" required placeholder="Specific address or location">
+                </div>
+                
+                <div class="form-group">
+                    <label for="health-description">Issue Description:</label>
+                    <textarea id="health-description" name="description" required placeholder="Please provide detailed information about the health or safety concern..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit Health/Safety Report</button>
+            </form>
+        </div>
+
+        <div class="page" id="report-community-issue">
+            <div class="breadcrumb">Community Services > Report Community Issue</div>
+            <div class="page-header">
+                <h2 class="page-title">Report Community Issue</h2>
+                <p class="page-subtitle">Report issues affecting our community</p>
+            </div>
+            
+            <div class="alert success" id="community-success">Your community issue report has been submitted successfully. We will address this matter appropriately.</div>
+            <div class="alert error" id="community-error">There was an error submitting your report. Please try again.</div>
+            
+            <form onsubmit="submitReport(event, 'community')">
+                <div class="form-group">
+                    <label for="community-name">Your Name:</label>
+                    <input type="text" id="community-name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="community-contact">Contact Information:</label>
+                    <input type="text" id="community-contact" name="contact" required placeholder="Phone number or email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="community-topic">Issue Category:</label>
+                    <select id="community-topic" name="topic" required>
+                        <option value="">Select issue category</option>
+                        <option value="Infrastructure">Infrastructure</option>
+                        <option value="Public Services">Public Services</option>
+                        <option value="Community Safety">Community Safety</option>
+                        <option value="Environmental Issue">Environmental Issue</option>
+                        <option value="Social Services">Social Services</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="Other Community Issue">Other Community Issue</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="community-location">Location of Issue:</label>
+                    <input type="text" id="community-location" name="location" required placeholder="Specific address or area">
+                </div>
+                
+                <div class="form-group">
+                    <label for="community-description">Issue Description:</label>
+                    <textarea id="community-description" name="description" required placeholder="Please provide detailed information about the community issue..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit Community Report</button>
+            </form>
+        </div>
+
+        <div class="page" id="request-assistance">
+            <div class="breadcrumb">Resources > Request Assistance</div>
+            <div class="page-header">
+                <h2 class="page-title">Request Assistance</h2>
+                <p class="page-subtitle">Request help with available assistance programs</p>
+            </div>
+            
+            <div class="alert success" id="assistance-success">Your assistance request has been submitted successfully. Our team will review your request and contact you within 48 hours.</div>
+            <div class="alert error" id="assistance-error">There was an error submitting your request. Please try again or contact our office directly.</div>
+            
+            <form onsubmit="submitReport(event, 'assistance')">
+                <div class="form-group">
+                    <label for="assistance-name">Your Name:</label>
+                    <input type="text" id="assistance-name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="assistance-contact">Contact Information:</label>
+                    <input type="text" id="assistance-contact" name="contact" required placeholder="Phone number or email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="assistance-topic">Type of Assistance:</label>
+                    <select id="assistance-topic" name="topic" required>
+                        <option value="">Select assistance type</option>
+                        <option value="Emergency Financial Assistance">Emergency Financial Assistance</option>
+                        <option value="Temporary Housing">Temporary Housing</option>
+                        <option value="Legal Aid">Legal Aid</option>
+                        <option value="Healthcare Resources">Healthcare Resources</option>
+                        <option value="Employment Assistance">Employment Assistance</option>
+                        <option value="Food/Basic Needs">Food/Basic Needs</option>
+                        <option value="Other Assistance">Other Assistance</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="assistance-urgency">Urgency Level:</label>
+                    <select id="assistance-urgency" name="urgency" required>
+                        <option value="">Select urgency</option>
+                        <option value="Immediate (within 24 hours)">Immediate (within 24 hours)</option>
+                        <option value="Urgent (within 1 week)">Urgent (within 1 week)</option>
+                        <option value="Standard (within 2 weeks)">Standard (within 2 weeks)</option>
+                        <option value="Non-urgent">Non-urgent</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="assistance-description">Request Details:</label>
+                    <textarea id="assistance-description" name="description" required placeholder="Please describe your situation and the assistance you need..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit Assistance Request</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 PWEA - Public Welfare and Emergency Agency. Serving our community with dedication and care.</p>
+            <p>Emergency Hotline: 555-PWEA-911 | Non-Emergency: 555-PWEA-INFO</p>
+        </div>
+    </footer>
+
+    <script>
+        // Discord webhook URL - CHANGE THIS TO YOUR WEBHOOK URL
+        const DISCORD_WEBHOOK = 'YOUR_DISCORD_WEBHOOK_URL_HERE';
+        
+        let activeDropdown = null;
+
+        function toggleDropdown(categoryId) {
+            const dropdown = document.getElementById(categoryId + '-dropdown');
+            
+            // Close other dropdowns
+            if (activeDropdown && activeDropdown !== dropdown) {
+                activeDropdown.classList.remove('active');
+            }
+            
+            // Toggle current dropdown
+            if (dropdown.classList.contains('active')) {
+                dropdown.classList.remove('active');
+                activeDropdown = null;
+            } else {
+                dropdown.classList.add('active');
+                activeDropdown = dropdown;
+            }
+        }
+
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            const selectedPage = document.getElementById(pageId);
+            if (selectedPage) {
+                selectedPage.classList.add('active');
+            }
+            
+            // Close all dropdowns
+            const dropdowns = document.querySelectorAll('.dropdown');
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+            activeDropdown = null;
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        async function submitReport(event, reportType) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            // Get form data
+            const name = formData.get('name');
+            const contact = formData.get('contact');
+            const topic = formData.get('topic');
+            const description = formData.get('description');
+            const location = formData.get('location');
+            const urgency = formData.get('urgency');
+            
+            // Hide previous alerts
+            const successAlert = document.getElementById(reportType + '-success');
+            const errorAlert = document.getElementById(reportType + '-error');
+            successAlert.style.display = 'none';
+            errorAlert.style.display = 'none';
+            
+            // Create Discord embed
+            let embed = {
+                title: `New ${reportType.charAt(0).toUpperCase() + reportType.slice(1)} Report`,
+                color: reportType === 'emergency' ? 16711680 : reportType === 'health' ? 16776960 : 3447003, // Red for emergency, yellow for health, blue for others
+                fields: [
+                    {
+                        name: "Name",
+                        value: name,
+                        inline: true
+                    },
+                    {
+                        name: "Contact",
+                        value: contact,
+                        inline: true
+                    },
+                    {
+                        name: "Topic/Type",
+                        value: topic,
+                        inline: true
+                    }
+                ],
+                timestamp: new Date().toISOString(),
+                footer: {
+                    text: "PWEA Report System"
+                }
+            };
+            
+            // Add location if present
+            if (location) {
+                embed.fields.push({
+                    name: "Location",
+                    value: location,
+                    inline: false
+                });
+            }
+            
+            // Add urgency if present
+            if (urgency) {
+                embed.fields.push({
+                    name: "Urgency",
+                    value: urgency,
+                    inline: true
+                });
+            }
+            
+            // Add description
+            embed.fields.push({
+                name: "Description",
+                value: description.length > 1024 ? description.substring(0, 1021) + "..." : description,
+                inline: false
+            });
+            
+            const payload = {
+                embeds: [embed]
+            };
+            
+            try {
+                // Check if webhook URL is set
+                if (DISCORD_WEBHOOK === 'https://discord.com/api/webhooks/1408525863426723840/tv9RnyUQS11rq037LOV0XDX6W5a_gDLqQcaelMx3TJmJvwujvGl2DcrTmgJi0fzHJPTF') {
+                    // Show success message even without webhook for demo purposes
+                    successAlert.style.display = 'block';
+                    form.reset();
+                    console.log('Report submitted (demo mode):', payload);
+                    return;
+                }
+                
+                const response = await fetch(DISCORD_WEBHOOK, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (response.ok) {
+                    successAlert.style.display = 'block';
+                    form.reset();
+                } else {
+                    throw new Error('Failed to submit report');
+                }
+            } catch (error) {
+                console.error('Error submitting report:', error);
+                errorAlert.style.display = 'block';
+            }
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            const navCategory = event.target.closest('.nav-category');
+            if (!navCategory && activeDropdown) {
+                activeDropdown.classList.remove('active');
+                activeDropdown = null;
+            }
+        });
+
+        // Prevent dropdown from closing when clicking inside it
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.dropdown')) {
+                event.stopPropagation();
+            }
+        });
+    </script>
+</body>
+</html>
